@@ -1,0 +1,28 @@
+{
+  "name": "term-list-enhanced",
+  "version": "0.0.1",
+  "description": "a enhancement for term-list",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/turingou/term-list-enhanced.git"
+  },
+  "keywords": [
+    "term",
+    "termlist",
+    "term-list",
+    "terminal"
+  ],
+  "author": "turing <o.u.turing@Gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/turingou/term-list-enhanced/issues"
+  },
+  "homepage": "https://github.com/turingou/term-list-enhanced",
+  "dependencies": {
+    "term-list": "*"
+  }
+}
