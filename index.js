@@ -3,26 +3,32 @@ var List = require('term-list');
 var defaults = {};
 defaults.marker = '\033[36m› \033[0m', // ♪
 defaults.markerLength = 2;
+defaults.labelMaxLength = 13;
 
-exports = module.exports = TermList;
+module.exports = TermList;
 
 function TermList(params) {
-  this.menu = new List(params || defaults);
+  this.configs = params || defaults;
+  this.menu = new List(this.configs);
   this.items = [];
 }
 
 TermList.prototype.adds = function(items, max) {
+  
   if (!items) return false;
   if (items.length === 0) return false;
+  
   var self = this;
   var menu = this.menu;
   var limit = 16 || max;
+  
   items.forEach(function(item, index) {
     if (index > limit) return false;
     if (typeof(item) === 'object') item.index = index;
     self.items.push(item);
     menu.add(index, typeof(item) === 'string' ? item : item.name);
   });
+
   return this;
 }
 
@@ -42,17 +48,44 @@ TermList.prototype.stop = function() {
   return false;
 }
 
-TermList.prototype.update = function(index, text) {
+TermList.prototype.update = function(index, text, align) {
+  
   var menu = this.menu;
   var item = this.items[index];
+  
   if (!item) return false;
+  
   var original = (typeof(item) === 'string') ? item : item.name;
-  var t = text ? ' ' + text : '';
-  menu.at(index).label = original + t;
+  var str = text ? ' ' + text : '';
+  
+  menu.at(index).label = 
+    align ?
+    this.align(original, this.configs.labelMaxLength || 13) + str :
+    original + str;
   menu.draw();
+
   return false;
+
 }
 
 TermList.prototype.clear = function(index) {
   return this.update(index);
+}
+
+TermList.prototype.align = function(str, maxlength) {
+
+  if (!str) return false;
+  if (str.length >= maxlength) return str;
+
+  str += fill(maxlength - str.length, ' ');
+  return s;
+
+  function fill(length, blank) {
+    var aligned = blank;
+    for (var i = length - 1; i >= 0; i--) {
+      aligned += blank;
+    };
+    return aligned;
+  }
+
 }

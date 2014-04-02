@@ -1,6 +1,6 @@
 {
   "name": "term-list-enhanced",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "a enhancement for term-list",
   "main": "index.js",
   "scripts": {
