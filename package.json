@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/turingou/term-list-enhanced",
   "dependencies": {
-    "term-list": "*"
+    "term-list": "*",
+    "underscore": "*"
   }
 }
