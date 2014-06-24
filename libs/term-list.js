@@ -1,12 +1,12 @@
 var _ = require('underscore');
-var List = require('term-list');
+var List = require('term-list-scrollable');
 
 var defaults = {};
 defaults.marker = '\033[36m› \033[0m', // ♪
 defaults.markerLength = 2;
 defaults.labelMaxLength = 13;
 defaults.labelKey = 'name';
-defaults.max = 16;
+defaults.viewportLength = 16;
 
 module.exports = TermList;
 
@@ -14,18 +14,14 @@ function TermList(params) {
   this.configs = _.extend(defaults, _.clone(params));
   this.menu = new List(this.configs);
   this.items = [];
+  this._header = '';
+  this._footer = '';
 }
 
 TermList.prototype.add = function(item, index) {
 
   if (!item) return false;
   if (!this.menu) return false;
-
-  var currentLength = this.count();
-  var limit = this.configs.max;
-
-  if (currentLength > limit) return false;
-  if (index && (index + 1) > limit) return false;
 
   var lastest = index || this.items.length;
   if (_.isObject(item)) item.index = lastest;
@@ -51,25 +47,48 @@ TermList.prototype.adds = function(items) {
 
 TermList.prototype.update = function(index, text, align) {
 
-  var menu = this.menu;
-  var item = this.items[index];
-  var label = this.configs.labelKey;
-  var line = menu.at(index);
+  var original;
 
-  if (!item) return false;
-  if (!line) return false;
+  function newLabel(original, text, align) {
+    var str = text ? ' ' + text : '';
+    var label =
+      align ?
+      this.align(original, this.configs.labelMaxLength) + str :
+      original + str;
+    return label;
+  }
 
-  var original = (typeof(item) === 'string') ? item : item[label];
-  var str = text ? ' ' + text : '';
+  if (index === 'header') {
+    original = this._header;
+    this.menu.header(newLabel(original, text, align));
+  } else if (index === 'footer') {
+    original = this._footer;
+    this.menu.footer(newLabel(original, text, align));
+  } else {
+    var item = this.items[index];
+    var label = this.configs.labelKey;
+    var line = this.menu.at(index);
 
-  line.label =
-    align ?
-    this.align(original, this.configs.labelMaxLength) + str :
-    original + str;
+    if (!item) return false;
+    if (!line) return false;
 
-  menu.draw();
+    original = (typeof(item) === 'string') ? item : item[label];
+    line.label = newLabel(original, text, align);
+  }
+
+  this.menu.draw();
   return false;
 
+}
+
+TermList.prototype.header = function(label) {
+  if (label === '' || label) this._header = label;
+  return this.menu.header(label);
+}
+
+TermList.prototype.footer = function(label) {
+  if (label === '' || label) this._footer = label;
+  return this.menu.footer(label);
 }
 
 TermList.prototype.align = function(str, maxlength) {
