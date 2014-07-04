@@ -13,7 +13,22 @@ menu.adds([
   }, {
     label: '√ : click me to update lebel',
     update: true
-  }
+  },
+  'long line blablbablabalabaalba',
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba', 
+  'long line blablbablabalabaalba'
 ]);
 
 menu.on('keypress', function(key, index) {

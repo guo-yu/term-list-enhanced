@@ -1,7 +1,7 @@
 {
   "name": "term-list-enhanced",
-  "version": "0.0.2",
-  "description": "a enhancement for term-list",
+  "version": "0.1.0",
+  "description": "a enhancement module for term-list, supporting setting or clear labels",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/turingou/term-list-enhanced",
   "dependencies": {
-    "term-list-scrollable": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "term-list-scrollable": "*"
   }
 }
